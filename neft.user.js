@@ -8,65 +8,89 @@
 // @description:zh      自动展开 Twitter 上的敏感内容和主页，无须登录账号
 // @description:zh-CN   自动展开 Twitter 上的敏感内容和主页，无须登录账号
 // @author              flyhaozi
+// @require             https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
 // @match               https://twitter.com/*
 // @grant               none
 // ==/UserScript==
- 
+
 (function () {
     'use strict';
- 
-    const config = { attributes: false, childList: true, subtree: false };
-    const callback = function (mutationsList, observer) {
-        for (const mutation of mutationsList) {
-            for (const elm of mutation.addedNodes) {
-                expandNSFW(elm);
+    const rules = [
+        {   // User Profile
+            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/UserByScreenNameWithoutResults/i,
+            paths: [
+                ['data.user.legacy.profile_interstitial_type', '']
+            ]
+        },
+        {   // User Timeline
+            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/User(Tweets|Media)/i,
+            paths: [
+                ['data.user.result.timeline.timeline.instructions[0].entries', [
+                    ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
+                    ['content.itemContent.tweet_results.result.legacy.retweeted_status_result.result.legacy.possibly_sensitive', false],
+                    ['content.itemContent.tweet_results.result.core.user.legacy.profile_interstitial_type', '']
+                ]],
+                ['data.user.result.timeline.timeline.instructions[1].entry.content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
+                ['data.user.result.timeline.timeline.instructions[1].entry.content.itemContent.tweet_results.result.core.user.legacy.profile_interstitial_type', '']
+            ],
+        },
+        {   // Tweet Timeline
+            regex: /^https:\/\/twitter\.com\/i\/api\/\d+\/timeline\/conversation\/\d+.json/i,
+            paths: [
+                ['globalObjects.tweets', [
+                    ['possibly_sensitive', false]
+                ]],
+            ],
+        },
+        {   // Search Timeline
+            regex: /^https:\/\/twitter\.com\/i\/api\/\d+\/search\/adaptive.json/i,
+            paths: [
+                ['globalObjects.tweets', [
+                    ['possibly_sensitive', false]
+                ]],
+            ],
+        }
+    ];
+
+    const originalOpen = window.XMLHttpRequest.prototype.open;
+    window.XMLHttpRequest.prototype.open = function (...args) {
+        const url = args[1];
+        for (const rule of rules) {
+            if (rule.regex.test(url)) {
+                this.addEventListener('readystatechange', function (e) {
+                    if (this.readyState === 4) {
+                        modifyResponse.call(this, e.target.responseText, rule);
+                    }
+                });
+                break;
             }
         }
+        return originalOpen.apply(this, args);
     };
-    const observer = new MutationObserver(callback);
-    findAndObserveTweetsContainer();
- 
-    // redo on url change
-    const pushState = history.pushState;
-    history.pushState = function () {
-        pushState.apply(history, arguments);
-        setTimeout(findAndObserveTweetsContainer, 200);
-    };
-    window.addEventListener('popstate', function () {
-        setTimeout(findAndObserveTweetsContainer, 200);
-    });
- 
-    function findAndObserveTweetsContainer() {
-        let container = null;
-        let warning = null;
-        const column = document.querySelector('#react-root main div[data-testid="primaryColumn"]');
-        if (column) {
-            container = column.querySelector('div[style*="relative"]');
-            warning = column.querySelector('div[data-testid="emptyState"]');
-        }
- 
-        if (warning) {
-            const viewProfileButton = warning.querySelector('div[role="button"]');
-            viewProfileButton.click();
-        }
- 
-        if (container) {
-            for (const elm of container.children) {
-                expandNSFW(elm);
+
+    function modifyResponse(originalText, rule) {
+        let modifiedText = originalText;
+        const originalObj = JSON.parse(originalText);
+        if (originalObj) {
+            let modifiedObj = originalObj;
+            const modifyValueByPaths = function (obj, paths) {
+                for (let [path, value] of paths) {
+                    if (Array.isArray(value)) {
+                        const arr = _.get(obj, path);
+                        _.forOwn(arr, function (v, key) {
+                            modifyValueByPaths(arr[key], value);
+                        });
+                        _.set(obj, path, arr);
+                    } else {
+                        _.set(obj, path, value);
+                    }
+                }
             }
-            observer.observe(container, config);
-        } else {
-            setTimeout(findAndObserveTweetsContainer, 200);
+            modifyValueByPaths(modifiedObj, rule.paths);
+            modifiedText = JSON.stringify(modifiedObj);
         }
-    }
- 
-    function expandNSFW(elm) {
-        const contentUC = elm.querySelector('article a[href="/settings/content_you_see"]');
-        if (contentUC) {
-            const viewTweetButton = contentUC.parentElement.parentElement.parentElement.children[1].children[0];
-            if (viewTweetButton) {
-                viewTweetButton.click();
-            }
-        }
+        Object.defineProperty(this, 'response', { writable: true });
+        Object.defineProperty(this, 'responseText', { writable: true });
+        this.response = this.responseText = modifiedText;
     }
 })();
