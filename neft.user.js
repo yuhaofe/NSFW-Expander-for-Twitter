@@ -57,6 +57,15 @@
                     ['possibly_sensitive', false]
                 ]],
             ],
+        },
+        {
+            // Bookmark Timeline
+            regex: /https:\/\/twitter\.com\/i\/api\/graphql\/.+\/Bookmarks/i,
+            paths: [
+                ['data.bookmark_timeline.timeline.instructions[0].entries', [
+                    ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false]
+                ]],
+            ],
         }
     ];
 
