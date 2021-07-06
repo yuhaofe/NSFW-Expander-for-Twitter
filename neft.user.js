@@ -34,8 +34,16 @@
                 ['data.user.result.timeline.timeline.instructions[1].entry.content.itemContent.tweet_results.result.core.user.legacy.profile_interstitial_type', '']
             ],
         },
+        {   // Home Timeline
+            regex: /https:\/\/twitter\.com\/i\/api\/\d+\/timeline\/home\.json/i,
+            paths: [
+                ['globalObjects.tweets', [
+                    ['possibly_sensitive', false]
+                ]],
+            ],
+        },
         {   // Tweet Timeline
-            regex: /^https:\/\/twitter\.com\/i\/api\/\d+\/timeline\/conversation\/\d+.json/i,
+            regex: /^https:\/\/twitter\.com\/i\/api\/\d+\/timeline\/conversation\/\d+\.json/i,
             paths: [
                 ['globalObjects.tweets', [
                     ['possibly_sensitive', false]
@@ -43,7 +51,7 @@
             ],
         },
         {   // Search Timeline
-            regex: /^https:\/\/twitter\.com\/i\/api\/\d+\/search\/adaptive.json/i,
+            regex: /^https:\/\/twitter\.com\/i\/api\/\d+\/search\/adaptive\.json/i,
             paths: [
                 ['globalObjects.tweets', [
                     ['possibly_sensitive', false]
