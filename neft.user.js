@@ -23,7 +23,7 @@
             ]
         },
         {   // User Timeline
-            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/User(Tweets|Media)/i,
+            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/(UserTweets|UserMedia|Likes)/i,
             paths: [
                 ['data.user.result.timeline.timeline.instructions[0].entries', [
                     ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
