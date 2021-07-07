@@ -10,6 +10,7 @@
 // @author              flyhaozi
 // @require             https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
 // @match               https://twitter.com/*
+// @match               https://mobile.twitter.com/*
 // @grant               none
 // ==/UserScript==
 
@@ -17,13 +18,13 @@
     'use strict';
     const rules = [
         {   // User Profile
-            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/UserBy/i,
+            regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/graphql\/.+\/UserBy/i,
             paths: [
                 ['data.user.legacy.profile_interstitial_type', '']
             ]
         },
         {   // User Timeline
-            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/(UserTweets|UserMedia|Likes)/i,
+            regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/graphql\/.+\/(UserTweets|UserMedia|Likes)/i,
             paths: [
                 ['data.user.result.timeline.timeline.instructions[0].entries', [
                     ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
@@ -35,7 +36,7 @@
             ],
         },
         {   // Home Timeline
-            regex: /^https:\/\/twitter\.com\/i\/api\/\d+\/timeline\/home(_latest)?\.json/i,
+            regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/\d+\/timeline\/home(_latest)?\.json/i,
             paths: [
                 ['globalObjects.tweets', [
                     ['possibly_sensitive', false]
@@ -43,7 +44,7 @@
             ],
         },
         {   // Tweet Timeline
-            regex: /^https:\/\/twitter\.com\/i\/api\/\d+\/timeline\/conversation\/\d+\.json/i,
+            regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/\d+\/timeline\/conversation\/\d+\.json/i,
             paths: [
                 ['globalObjects.tweets', [
                     ['possibly_sensitive', false]
@@ -51,7 +52,7 @@
             ],
         },
         {   // Search Timeline
-            regex: /^https:\/\/twitter\.com\/i\/api\/\d+\/search\/adaptive\.json/i,
+            regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/\d+\/search\/adaptive\.json/i,
             paths: [
                 ['globalObjects.tweets', [
                     ['possibly_sensitive', false]
@@ -60,7 +61,7 @@
         },
         {
             // Bookmark Timeline
-            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/Bookmarks/i,
+            regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/graphql\/.+\/Bookmarks/i,
             paths: [
                 ['data.bookmark_timeline.timeline.instructions[0].entries', [
                     ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false]
@@ -69,7 +70,7 @@
         },
         {
             // List Timeline
-            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/List(Latest|Ranked)TweetsTimeline/i,
+            regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/graphql\/.+\/List(Latest|Ranked)TweetsTimeline/i,
             paths: [
                 ['data.list.tweets_timeline.timeline.instructions[0].entries', [
                     ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
