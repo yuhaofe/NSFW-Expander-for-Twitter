@@ -17,7 +17,7 @@
     'use strict';
     const rules = [
         {   // User Profile
-            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/UserByScreenNameWithoutResults/i,
+            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/UserBy/i,
             paths: [
                 ['data.user.legacy.profile_interstitial_type', '']
             ]
@@ -35,7 +35,7 @@
             ],
         },
         {   // Home Timeline
-            regex: /https:\/\/twitter\.com\/i\/api\/\d+\/timeline\/home\.json/i,
+            regex: /^https:\/\/twitter\.com\/i\/api\/\d+\/timeline\/home(_latest)?\.json/i,
             paths: [
                 ['globalObjects.tweets', [
                     ['possibly_sensitive', false]
@@ -60,7 +60,7 @@
         },
         {
             // Bookmark Timeline
-            regex: /https:\/\/twitter\.com\/i\/api\/graphql\/.+\/Bookmarks/i,
+            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/Bookmarks/i,
             paths: [
                 ['data.bookmark_timeline.timeline.instructions[0].entries', [
                     ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false]
@@ -69,7 +69,7 @@
         },
         {
             // List Timeline
-            regex: /https:\/\/twitter\.com\/i\/api\/graphql\/.+\/List.+TweetsTimeline/i,
+            regex: /^https:\/\/twitter\.com\/i\/api\/graphql\/.+\/List(Latest|Ranked)TweetsTimeline/i,
             paths: [
                 ['data.list.tweets_timeline.timeline.instructions[0].entries', [
                     ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
