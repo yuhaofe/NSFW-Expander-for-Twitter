@@ -66,6 +66,16 @@
                     ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false]
                 ]],
             ],
+        },
+        {
+            // List Timeline
+            regex: /https:\/\/twitter\.com\/i\/api\/graphql\/.+\/List.+TweetsTimeline/i,
+            paths: [
+                ['data.list.tweets_timeline.timeline.instructions[0].entries', [
+                    ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
+                    ['content.itemContent.tweet_results.result.legacy.retweeted_status_result.result.legacy.possibly_sensitive', false]
+                ]],
+            ],
         }
     ];
 
