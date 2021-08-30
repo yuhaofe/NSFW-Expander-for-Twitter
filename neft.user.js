@@ -20,7 +20,8 @@
         {   // User Profile
             regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/graphql\/.+\/UserBy/i,
             paths: [
-                ['data.user.legacy.profile_interstitial_type', '']
+                ['data.user.legacy.profile_interstitial_type', ''],
+                ['data.user.result.legacy.profile_interstitial_type', '']
             ]
         },
         {   // User Timeline
@@ -29,10 +30,12 @@
                 ['data.user.result.timeline.timeline.instructions[0].entries', [
                     ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
                     ['content.itemContent.tweet_results.result.legacy.retweeted_status_result.result.legacy.possibly_sensitive', false],
-                    ['content.itemContent.tweet_results.result.core.user.legacy.profile_interstitial_type', '']
+                    ['content.itemContent.tweet_results.result.core.user.legacy.profile_interstitial_type', ''],
+                    ['content.itemContent.tweet_results.result.core.user_results.result.legacy.profile_interstitial_type', '']
                 ]],
                 ['data.user.result.timeline.timeline.instructions[1].entry.content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
-                ['data.user.result.timeline.timeline.instructions[1].entry.content.itemContent.tweet_results.result.core.user.legacy.profile_interstitial_type', '']
+                ['data.user.result.timeline.timeline.instructions[1].entry.content.itemContent.tweet_results.result.core.user.legacy.profile_interstitial_type', ''],
+                ['data.user.result.timeline.timeline.instructions[1].entry.content.itemContent.tweet_results.result.core.user_results.result.legacy.profile_interstitial_type', '']
             ],
         },
         {   // Home Timeline
@@ -44,12 +47,19 @@
             ],
         },
         {   // Tweet Timeline
-            regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/\d+\/timeline\/conversation\/\d+\.json/i,
+            regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/\d+\/(timeline\/conversation\/\d+|rux)\.json/i,
             paths: [
                 ['globalObjects.tweets', [
                     ['possibly_sensitive', false]
                 ]],
             ],
+        },
+        {   // Tweet Timeline 2
+            regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/graphql\/.+\/TweetDetail/i,
+            paths: [
+                ['data.threaded_conversation_with_injections.instructions[0].entries[0].content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
+                ['data.threaded_conversation_with_injections.instructions[0].entries[0].content.itemContent.tweet_results.result.core.user_results.result.legacy.profile_interstitial_type', ''] //user
+            ]
         },
         {   // Search Timeline
             regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/\d+\/search\/adaptive\.json/i,
