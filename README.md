@@ -1,5 +1,7 @@
 # NSFW Expander for Twitter
-[![](https://img.shields.io/github/stars/flyhaozi/NSFW-Expander-for-Twitter?style=social)](https://github.com/flyhaozi/NSFW-Expander-for-Twitter)
+[![](https://img.shields.io/github/stars/yuhaofe/NSFW-Expander-for-Twitter?style=social)](https://github.com/yuhaofe/NSFW-Expander-for-Twitter)
+
+⚠ This script is not working anymore, please uninstall it.
 
 This script expands NSFW contents and accounts on Twitter automatically without logging in.
 ## ⚠ Caution

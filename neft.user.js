@@ -2,12 +2,12 @@
 // @name                NSFW Expander for Twitter
 // @name:zh             Twitter 敏感内容自动展开
 // @name:zh-CN          Twitter 敏感内容自动展开
-// @namespace           https://github.com/flyhaozi
+// @namespace           https://github.com/yuhaofe
 // @version             0.2.2
 // @description         Expand NSFW contents and accounts on Twitter automatically without logging in
 // @description:zh      自动展开 Twitter 上的敏感内容和主页，无须登录账号
 // @description:zh-CN   自动展开 Twitter 上的敏感内容和主页，无须登录账号
-// @author              flyhaozi
+// @author              yuhaofe
 // @require             https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
 // @match               https://twitter.com/*
 // @match               https://mobile.twitter.com/*

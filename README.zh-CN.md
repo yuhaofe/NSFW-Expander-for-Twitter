@@ -1,5 +1,7 @@
 # Twitter 敏感内容自动展开
-[![](https://img.shields.io/github/stars/flyhaozi/NSFW-Expander-for-Twitter?style=social)](https://github.com/flyhaozi/NSFW-Expander-for-Twitter)
+[![](https://img.shields.io/github/stars/yuhaofe/NSFW-Expander-for-Twitter?style=social)](https://github.com/yuhaofe/NSFW-Expander-for-Twitter)
+
+⚠ 该脚本已无法正常使用，请卸载
 
 该脚本可以在未登录账号的情况下自动展开 Twitter 上的敏感内容和主页
 ## ⚠ 注意
