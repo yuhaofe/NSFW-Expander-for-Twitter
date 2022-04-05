@@ -3,7 +3,7 @@
 // @name:zh             Twitter 敏感内容自动展开
 // @name:zh-CN          Twitter 敏感内容自动展开
 // @namespace           https://github.com/yuhaofe
-// @version             0.2.2
+// @version             0.2.3
 // @description         Expand NSFW contents and accounts on Twitter automatically without logging in
 // @description:zh      自动展开 Twitter 上的敏感内容和主页，无须登录账号
 // @description:zh-CN   自动展开 Twitter 上的敏感内容和主页，无须登录账号
