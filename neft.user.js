@@ -27,15 +27,15 @@
         {   // User Timeline
             regex: /^https:\/\/(mobile\.)?twitter\.com\/i\/api\/graphql\/.+\/(UserTweets|UserMedia|Likes)/i,
             paths: [
-                ['data.user.result.timeline.timeline.instructions[0].entries', [
+                ['data.user.result.timeline_v2.timeline.instructions[1].entries', [
                     ['content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
                     ['content.itemContent.tweet_results.result.legacy.retweeted_status_result.result.legacy.possibly_sensitive', false],
                     ['content.itemContent.tweet_results.result.core.user.legacy.profile_interstitial_type', ''],
                     ['content.itemContent.tweet_results.result.core.user_results.result.legacy.profile_interstitial_type', '']
                 ]],
-                ['data.user.result.timeline.timeline.instructions[1].entry.content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
-                ['data.user.result.timeline.timeline.instructions[1].entry.content.itemContent.tweet_results.result.core.user.legacy.profile_interstitial_type', ''],
-                ['data.user.result.timeline.timeline.instructions[1].entry.content.itemContent.tweet_results.result.core.user_results.result.legacy.profile_interstitial_type', '']
+                ['data.user.result.timeline_v2.timeline.instructions[2].entry.content.itemContent.tweet_results.result.legacy.possibly_sensitive', false],
+                ['data.user.result.timeline_v2.timeline.instructions[2].entry.content.itemContent.tweet_results.result.core.user.legacy.profile_interstitial_type', ''],
+                ['data.user.result.timeline_v2.timeline.instructions[2].entry.content.itemContent.tweet_results.result.core.user_results.result.legacy.profile_interstitial_type', '']
             ],
         },
         {   // Home Timeline
